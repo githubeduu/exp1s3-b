@@ -64,9 +64,9 @@ public class FechaMedicaController {
 
     @GetMapping("/medicos")
     public ResponseEntity<?> getMedicos() {
-        List<Paciente> medicos = new ArrayList<>();
+        List<Medico> medicos = new ArrayList<>();
         for (FichaMedica ficha : fichaMedica){
-            medicos.add(ficha.getPaciente());
+            medicos.add(ficha.getMedico());
         }
         if(medicos.isEmpty()){
             return ResponseEntity.badRequest().body("Lista de medicos no encontrada");
