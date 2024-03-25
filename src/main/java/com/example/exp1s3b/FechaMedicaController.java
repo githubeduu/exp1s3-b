@@ -29,7 +29,7 @@ public class FechaMedicaController {
             new Medico(3, "Pedro Ramírez", "83556130", "Ortopedista")));
 
         fichaMedica.add(new FichaMedica(2, "18-03-2024", 4, "Problemas gastrointestinales",
-            new Paciente(4, "María González", "158765440", "981765484", "ana.rodriguez@gmail.com", "Plaza Mayor 789"), 
+            new Paciente(4, "María González", "54439397", "981765484", "ana.rodriguez@gmail.com", "Plaza Mayor 789"), 
             new Medico(4, "Sofía García", "83556131", "Gastroenteróloga")));
 
         fichaMedica.add(new FichaMedica(5, "19-03-2024", 0, "Infección respiratoria",
@@ -41,11 +41,11 @@ public class FechaMedicaController {
             new Medico(6, "Lucía Torres", "83556133", "Oftalmóloga")));
 
         fichaMedica.add(new FichaMedica(1, "21-03-2023", 0, "Alergia",
-            new Paciente(7, "Juan Perez", "178765439", "981765487", "javier.hernandez@gmail.com", "Calle Sur 1415"), 
+            new Paciente(7, "Javier hernandez", "180265208", "981765487", "javier.hernandez@gmail.com", "Calle Sur 1415"), 
             new Medico(7, "Martín Vargas", "83556134", "Alergólogo")));
 
         fichaMedica.add(new FichaMedica(1, "22-03-2022", 7, "Dolor de espalda",
-            new Paciente(8, "Juan Perez", "178765439", "981765488", "elena.diaz@gmail.com", "Avenida Este 1617"), 
+            new Paciente(8, "Elena Diaz", "198544371", "981765488", "elena.diaz@gmail.com", "Avenida Este 1617"), 
             new Medico(8, "Carmen Ruiz", "83556135", "Fisioterapeuta")));
     }
 
