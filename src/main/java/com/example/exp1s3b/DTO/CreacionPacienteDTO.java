@@ -1,32 +1,13 @@
-package com.example.exp1s3b.model;
+package com.example.exp1s3b.DTO;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.io.Serializable;
 
-@Entity
-@Table(name = "paciente")
-public class Paciente{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CreacionPacienteDTO implements Serializable {
     private Long id;
-        
-    @Column()
     private String nombre;
-
-    @Column()
     private String rut;
-
-    @Column()
     private String telefono;
-
-    @Column()
     private String correo;
-
-    @Column()
     private String direccion;
 
     //getters

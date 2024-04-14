@@ -3,12 +3,18 @@ package com.example.exp1s3b.controller;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.exp1s3b.DTO.CreacionMedicoDTO;
+import com.example.exp1s3b.DTO.CreacionPacienteDTO;
 import com.example.exp1s3b.model.FichaMedica;
 import com.example.exp1s3b.model.Medico;
 import com.example.exp1s3b.model.Paciente;
@@ -20,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -41,41 +48,69 @@ public class FechaMedicaController {
        return pacienteService.getAllPaciente();       
     }
 
+    @GetMapping("/paciente/{id}")
+    public ResponseEntity<?> getPacienteById(@PathVariable Long id) {
+        Optional<Paciente> paciente = pacienteService.getPacienteById(id);
+        if (paciente.isPresent()) {
+            return ResponseEntity.ok(paciente.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente no encontrado");
+        } 
+    }
+
     @GetMapping("/medico")
     public List<Medico> getMedico() {       
        return medicoService.getAllMedico();       
     }
 
+    @GetMapping("/medico/{id}")
+    public ResponseEntity<?> getMedicoyId(@PathVariable Long id) {
+        Optional<Medico> medico = medicoService.getMedicoById(id);
+        if (medico.isPresent()) {
+            return ResponseEntity.ok(medico.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medico no encontrado");
+        } 
+    }   
 
-    // @GetMapping("/medicos")
-    // public ResponseEntity<?> getMedicos() {
-    //     List<Medico> medicos = new ArrayList<>();
-    //     for (FichaMedica ficha : fichaMedica){
-    //         medicos.add(ficha.getMedico());
-    //     }
-    //     if(medicos.isEmpty()){
-    //         return ResponseEntity.badRequest().body("Lista de medicos no encontrada");
-    //     }else{
-    //         return ResponseEntity.ok(medicos);
-    //     }
-    // }
+    @PostMapping("/paciente")
+    public ResponseEntity<?> createPaciente(@Validated @RequestBody CreacionPacienteDTO pacienteDto) {
+      try {    
+             Paciente paciente = new Paciente();
+             paciente.setId(pacienteDto.getId());
+             paciente.setNombre(pacienteDto.getNombre());
+             paciente.setRut(pacienteDto.getRut());
+             paciente.setTelefono(pacienteDto.getTelefono());
+             paciente.setCorreo(pacienteDto.getCorreo());
+             paciente.setDireccion(pacienteDto.getDireccion());
+          
+             Paciente nuevoPaciente = pacienteService.createPaciente(paciente);
 
-    // @GetMapping("/fichaMedica/paciente/{rut}")
-    // public ResponseEntity<?> getFichaMedicaPorRut(@PathVariable String rut) {
-    //     List<FichaMedica> fichasPorRut  = new ArrayList<>();
-    //     for (FichaMedica ficha : fichaMedica){
-    //         if(ficha.getPaciente().getRut().equals(rut))
-    //         {
-    //             fichasPorRut.add(ficha);
-    //         }           
-    //     }
-    //     if(fichasPorRut.isEmpty()){
-    //         return ResponseEntity.badRequest().body("Paciente no encontrado");
-    //     }else{
-    //         return ResponseEntity.ok(fichasPorRut);
-    //     }
-       
-    // }
+
+               return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPaciente);
+        } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el paciente:          " + e);
+             }
+    }
+
+    @PostMapping("/medico")
+    public ResponseEntity<?> createMedico(@Validated @RequestBody CreacionMedicoDTO medicoDto) {
+      try {    
+             Medico medico = new Medico();
+             medico.setId(medicoDto.getId());
+             medico.setNombre(medicoDto.getNombre());
+             medico.setRut(medicoDto.getRut());
+             medico.setEspecialidad(medicoDto.getEspecialidad());       
+          
+             Medico nuevoMedico = medicoService.createMedico(medico);
+
+
+               return ResponseEntity.status(HttpStatus.CREATED).body(nuevoMedico);
+        } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el medico:          " + e);
+             }
+    }
+
 
     // @GetMapping("/fichaMedica/fechaInicio/{fechaInicio}/fechaFin/{fechaFin}")
     // public ResponseEntity<?> getFichaPorFechas(@PathVariable String fechaInicio, @PathVariable String fechaFin) {

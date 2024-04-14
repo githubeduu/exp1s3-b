@@ -1,26 +1,10 @@
-package com.example.exp1s3b.model;
+package com.example.exp1s3b.DTO;
+import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "paciente")
-public class Medico {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CreacionMedicoDTO implements Serializable { 
     private Long id;
-
-    @Column()
     private String nombre;
-
-    @Column()
     private String rut;
-
-    @Column()
     private String especialidad;
 
     //getters
@@ -56,5 +40,7 @@ public class Medico {
     public void setEspecialidad(String especialidad){
         this.especialidad = especialidad;
     }
-   
+    
+
+    
 }

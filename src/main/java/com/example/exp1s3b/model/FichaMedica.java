@@ -89,11 +89,11 @@ public class FichaMedica {
         this.fecha = fecha;
     }
 
-    public void getDiasLicencia(int diasLicencia){
+    public void setDiasLicencia(int diasLicencia){
         this.diasLicencia = diasLicencia;
     }
 
-    public void getDiagnostico(String diagnostico){
+    public void setDiagnostico(String diagnostico){
         this.diagnostico = diagnostico;
     }
 
@@ -101,7 +101,7 @@ public class FichaMedica {
         this.pacienteId = pacienteId;
     }
 
-    public void getPaciente(Paciente paciente){
+    public void setPaciente(Paciente paciente){
         this.paciente = paciente;
     }
 
@@ -109,7 +109,7 @@ public class FichaMedica {
         this.medicoId = medicoId;
     }
 
-    public void getMedico(Medico medico){
+    public void setMedico(Medico medico){
         this.medico = medico;
     }
 }
