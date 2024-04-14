@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,6 +95,35 @@ public class FechaMedicaController {
              }
     }
 
+    @PutMapping("/paciente/{id}")
+public ResponseEntity<?> updatePaciente(@PathVariable Long id, @RequestBody Paciente paciente) {
+    try {        
+        Optional<Paciente> pacienteExistente = pacienteService.getPacienteById(id);
+        if (pacienteExistente.isPresent()) {
+            Paciente pacienteActual = pacienteExistente.get();
+
+            // Actualizar solo los campos que no son nulos
+            if (paciente.getTelefono() != null) {
+                pacienteActual.setTelefono(paciente.getTelefono());
+            }
+            if (paciente.getCorreo() != null) {
+                pacienteActual.setCorreo(paciente.getCorreo());
+            }
+            if (paciente.getDireccion() != null) {
+                pacienteActual.setDireccion(paciente.getDireccion());
+            }
+
+            // Guardar el paciente actualizado
+            Paciente pacienteActualizado = pacienteService.updatePaciente(pacienteActual);
+            return ResponseEntity.ok(pacienteActualizado);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente no encontrado");
+        }
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el paciente: " + e);
+    }
+}
+
     @PostMapping("/medico")
     public ResponseEntity<?> createMedico(@Validated @RequestBody CreacionMedicoDTO medicoDto) {
       try {    
@@ -110,6 +141,28 @@ public class FechaMedicaController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el medico:          " + e);
              }
     }
+
+    @DeleteMapping("/paciente/{id}")
+    public ResponseEntity<?> deletePaciente(@PathVariable Long id) {
+    Optional<Paciente> paciente = pacienteService.getPacienteById(id);
+        if (paciente.isPresent()) {
+            pacienteService.deletePaciente(id);
+            return ResponseEntity.ok("Paciente eliminado correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paciente no encontrado");
+        }
+}
+
+    @DeleteMapping("/medico/{id}")
+    public ResponseEntity<?> deleteMedico(@PathVariable Long id) {
+    Optional<Medico> medico = medicoService.getMedicoById(id);
+        if (medico.isPresent()) {
+            medicoService.deleteMedico(id);
+            return ResponseEntity.ok("Medico eliminado correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Medico no encontrado");
+        }
+}
 
 
     // @GetMapping("/fichaMedica/fechaInicio/{fechaInicio}/fechaFin/{fechaFin}")

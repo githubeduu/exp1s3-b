@@ -30,15 +30,8 @@ public class PacienteServicelmpl implements PacienteService{
     }
 
     @Override
-    public Paciente updatePaciente(Long id, Paciente paciente)
-    {
-        if(pacienteRepository.existsById(id)){
-            paciente.setId(id);
-            return pacienteRepository.save(paciente);
-        }else{
-            return null;
-        }
-        
+    public Paciente updatePaciente(Paciente paciente) {
+    return pacienteRepository.save(paciente);
     }
 
     @Override
