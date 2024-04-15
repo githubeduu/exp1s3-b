@@ -1,52 +1,29 @@
-package com.example.exp1s3b.model;
+package com.example.exp1s3b.DTO;
+
 import java.sql.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.example.exp1s3b.model.Medico;
+import com.example.exp1s3b.model.Paciente;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity
-@Table(name = "fichamedica")
-public class FichaMedica {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CreacionFichaMedicaDTO {
+ 
     private Long id;
-        
-    @Column()
+    @JsonFormat(pattern="dd-mm-yyyy")  
     private Date fecha;
-
-    @Column()
-    private int diasLicencia;
-        
-    @Column()
+    private int diasLicencia;    
     private String diagnostico;
-
-
-    @Column(name = "paciente_id", insertable = false, updatable = false)
     private Long pacienteId;
-
-    @ManyToOne
-    @JoinColumn(name = "paciente_id", referencedColumnName = "id")
     private Paciente paciente;
-
-    @Column(name = "medico_id", insertable = false, updatable = false)
     private Long medicoId; 
-
-    @ManyToOne
-    @JoinColumn(name = "medico_id", referencedColumnName = "id")
     private Medico medico;
     
     //getters
     public Long getId(){
         return id;
     }
-
-    public Date getFecha(){             
+    
+    public Date getFecha(){          
         return fecha;
     }
 
